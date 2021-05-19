@@ -10,14 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rachmatwahid.academy.CourseReaderCallback
-import com.rachmatwahid.academy.R
 import com.rachmatwahid.academy.activity.CourseReaderActivity
 import com.rachmatwahid.academy.adapter.ModuleListAdapter
 import com.rachmatwahid.academy.adapter.MyAdapterClickListener
 import com.rachmatwahid.academy.data.ModuleEntity
 import com.rachmatwahid.academy.databinding.FragmentModuleListBinding
-import com.rachmatwahid.academy.utils.DataDummy
 import com.rachmatwahid.academy.viewmodel.CourseReaderViewModel
+import com.rachmatwahid.academy.viewmodel.ViewModelFactory
 
 class ModuleListFragment : Fragment(), MyAdapterClickListener {
 
@@ -31,25 +30,25 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
     private lateinit var courseReaderCallback: CourseReaderCallback
     private lateinit var viewModel: CourseReaderViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         fragmentModuleListBinding = FragmentModuleListBinding.inflate(inflater, container, false)
         return fragmentModuleListBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(requireActivity())
+        viewModel = ViewModelProvider(requireActivity(), factory)[CourseReaderViewModel::class.java]
 
         adapter = ModuleListAdapter(this)
-        populateRecyclerView(viewModel.getModules())
+        fragmentModuleListBinding.progressBar.visibility = View.VISIBLE
+        viewModel.getModules().observe(viewLifecycleOwner, { modules ->
+            fragmentModuleListBinding.progressBar.visibility = View.GONE
+            populateRecyclerView(modules)
+        })
     }
 
     override fun onAttach(context: Context) {

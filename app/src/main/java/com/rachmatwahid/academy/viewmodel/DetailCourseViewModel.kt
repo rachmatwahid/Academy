@@ -1,11 +1,12 @@
 package com.rachmatwahid.academy.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.rachmatwahid.academy.data.CourseEntity
 import com.rachmatwahid.academy.data.ModuleEntity
-import com.rachmatwahid.academy.utils.DataDummy
+import com.rachmatwahid.academy.data.source.AcademyRepository
 
-class DetailCourseViewModel: ViewModel() {
+class DetailCourseViewModel(private val academyRepository: AcademyRepository): ViewModel() {
 
     private lateinit var courseId: String
 
@@ -13,17 +14,8 @@ class DetailCourseViewModel: ViewModel() {
         this.courseId = courseId
     }
 
-    fun getCourse(): CourseEntity {
-        lateinit var course: CourseEntity
-        val coursesEntities = DataDummy.generateDummyCourses()
-        for (courseEntity in coursesEntities) {
-            if (courseEntity.courseId == courseId) {
-                course = courseEntity
-            }
-        }
-        return course
-    }
+    fun getCourse(): LiveData<CourseEntity> = academyRepository.getCourseWithModules(courseId)
 
-    fun getModules(): List<ModuleEntity> = DataDummy.generateDummyModules(courseId)
+    fun getModules(): LiveData<ArrayList<ModuleEntity>> = academyRepository.getAllModulesByCourse(courseId)
 
 }

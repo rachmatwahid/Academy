@@ -1,10 +1,11 @@
 package com.rachmatwahid.academy.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.rachmatwahid.academy.data.CourseEntity
-import com.rachmatwahid.academy.utils.DataDummy
+import com.rachmatwahid.academy.data.source.AcademyRepository
 
-class BookmarkViewModel: ViewModel() {
+class BookmarkViewModel(private val academyRepository: AcademyRepository): ViewModel() {
 
-    fun getBookmarks(): List<CourseEntity> = DataDummy.generateDummyCourses()
+    fun getBookmarks(): LiveData<ArrayList<CourseEntity>> = academyRepository.getBookmarkedCourses()
 }

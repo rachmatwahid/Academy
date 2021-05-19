@@ -8,6 +8,7 @@ import com.rachmatwahid.academy.R
 import com.rachmatwahid.academy.fragment.ModuleContentFragment
 import com.rachmatwahid.academy.fragment.ModuleListFragment
 import com.rachmatwahid.academy.viewmodel.CourseReaderViewModel
+import com.rachmatwahid.academy.viewmodel.ViewModelFactory
 
 class CourseReaderActivity : AppCompatActivity(), CourseReaderCallback {
 
@@ -19,7 +20,8 @@ class CourseReaderActivity : AppCompatActivity(), CourseReaderCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_course_reader)
 
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(this)
+        val viewModel = ViewModelProvider(this, factory)[CourseReaderViewModel::class.java]
 
         val bundle = intent.extras
         if (bundle != null) {
