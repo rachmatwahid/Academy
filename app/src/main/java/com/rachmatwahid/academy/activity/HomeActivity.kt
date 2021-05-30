@@ -5,7 +5,9 @@ import android.os.Bundle
 import com.rachmatwahid.academy.R
 import com.rachmatwahid.academy.adapter.SectionsPagerAdapter
 import com.rachmatwahid.academy.databinding.ActivityHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

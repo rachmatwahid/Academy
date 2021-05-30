@@ -12,8 +12,10 @@ import com.rachmatwahid.academy.databinding.FragmentAcademyBinding
 import com.rachmatwahid.academy.utils.DataDummy
 import com.rachmatwahid.academy.viewmodel.AcademyViewModel
 import com.rachmatwahid.academy.viewmodel.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class AcademyFragment : Fragment() {
 
     private lateinit var fragmentAcademyBinding: FragmentAcademyBinding
@@ -21,7 +23,7 @@ class AcademyFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         fragmentAcademyBinding = FragmentAcademyBinding.inflate(layoutInflater, container, false)
         return fragmentAcademyBinding.root
     }
